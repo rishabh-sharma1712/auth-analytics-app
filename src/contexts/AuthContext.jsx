@@ -1,8 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
-// Demo mode toggle - set to false when reqres.in API is working
-export const DEMO_MODE = true;
-
 // Create Auth Context
 const AuthContext = createContext();
 
@@ -21,6 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [demoMode, setDemoMode] = useState(true); // Convert DEMO_MODE to state
 
   // Check if user is already logged in on app load
   useEffect(() => {
@@ -43,10 +41,15 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  // Toggle demo mode function
+  const toggleDemoMode = () => {
+    setDemoMode(prev => !prev);
+  };
+
   // Login function
   const login = async (email, password) => {
     // Demo mode - bypass API call for testing
-    if (DEMO_MODE) {
+    if (demoMode) {
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 500));
       
@@ -64,7 +67,7 @@ export const AuthProvider = ({ children }) => {
       }
     }
 
-    // Original API call - will be used when DEMO_MODE = false
+    // Original API call - will be used when demoMode = false
     try {
       const response = await fetch('https://reqres.in/api/login', {
         method: 'POST',
@@ -138,6 +141,8 @@ export const AuthProvider = ({ children }) => {
     loading,
     login,
     logout,
+    demoMode,
+    toggleDemoMode,
   };
 
   return (

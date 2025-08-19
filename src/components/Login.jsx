@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DEMO_MODE, useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
+import DemoModeToggle from './DemoModeToggle';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +11,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
-  const { login } = useAuth();
+  const { login, demoMode } = useAuth();
   const navigate = useNavigate();
 
   // Handle input changes
@@ -88,6 +89,7 @@ const Login = () => {
       padding: '20px',
       boxSizing: 'border-box'
     }}>
+      <DemoModeToggle />
       <div className="card" style={{
         width: '100%',
         maxWidth: '420px',
@@ -198,7 +200,7 @@ const Login = () => {
           <strong style={{ color: '#495057' }}>Demo Credentials:</strong><br />
           Email: eve.holt@reqres.in<br />
           Password: cityslicka
-          {DEMO_MODE && (
+          {demoMode && (
             <div style={{
               marginTop: '12px',
               marginLeft: '8px',

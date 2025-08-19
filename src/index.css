@@ -167,3 +167,16 @@ body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Demo Mode Toggle Tooltip */
+.demo-toggle-tooltip {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+button:hover + .demo-toggle-tooltip,
+.demo-toggle-tooltip:hover {
+  opacity: 1;
+  transform: translateY(0);
+}
